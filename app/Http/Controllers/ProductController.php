@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -25,7 +25,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categorias = Category::all();
+        return view('actualizacion_stock.create', ['categorias' => $categorias]);
     }
 
     /**
@@ -33,7 +34,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Product::create($request->all());
+        return redirect()->route('actualizacion_stock.index');
     }
 
     /**
@@ -55,14 +57,22 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
-    {
-        //
-    }
 
+    public function update(Request $request, $id)
+    {
+        $producto = Product::findOrFail($id);
+        $cantidad = $request->input('cantidad');
+
+        // Aumentar la cantidad de stock actual
+        $producto->stock += $cantidad;
+        $producto->save();
+
+        return redirect('/actualizacion_stock')->with('success', 'Stock actualizado correctamente.');
+}
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(Product $product)
     {
         //
