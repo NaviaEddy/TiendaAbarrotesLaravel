@@ -1,11 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -14,9 +12,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $productos = Product::all();
-
-        return view('actualizacion_stock.index', ['productos' => $productos]);
+        $product = Product::all()->sortBy('created_at');
+        $currentUrl = '/Lista_productos';
+        return view('store.lista_productos')->with([
+            'currentUrl' => $currentUrl,
+            'products' => $product
+        ]);
     }
 
     /**
@@ -40,7 +41,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $producto)
+    public function show(Product $product)
     {
         //
     }
@@ -48,7 +49,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $producto)
+    public function edit(Product $product)
     {
         //
     }
@@ -56,6 +57,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, $id)
     {
         $producto = Product::findOrFail($id);
@@ -66,12 +68,12 @@ class ProductController extends Controller
         $producto->save();
 
         return redirect('/actualizacion_stock')->with('success', 'Stock actualizado correctamente.');
-    }
-
+}
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $producto)
+
+    public function destroy(Product $product)
     {
         //
     }
