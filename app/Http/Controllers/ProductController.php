@@ -9,7 +9,7 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-        /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -25,7 +25,7 @@ class ProductController extends Controller
     public function create()
     {
         $categorias = Category::all();
-        return view('actualizacion_stock.create', ['categorias'=>$categorias]);
+        return view('actualizacion_stock.create', ['categorias' => $categorias]);
     }
 
     /**
