@@ -1,0 +1,78 @@
+header {
+    width: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #383939; /* Color del navbar */
+    height: 55px; /* Establece una altura fija para el navbar */
+    max-height: 10.1vh; /* Ajusta si es necesario */
+    font-family: "Pacifico", sans-serif;
+    font-weight: normal;
+    font-size: larger;
+}
+
+.header-container {
+    padding: 0;
+    margin: 15px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    display: inline;
+    margin-left: 20px;
+}
+
+ul.right li {
+    float: right;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+.navbar-brand {
+    color: #fffedb;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-item .nav-link {
+    position: relative;
+    color: #fffedb;
+}
+
+.navbar-nav .nav-item .nav-link:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+    bottom: 5px;
+    left: 0;
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-item.active .nav-link:after,
+.navbar-nav .nav-item .nav-link:hover:after {
+    visibility: visible;
+    transform: scaleX(1);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-info i {
+    margin-bottom: 5px; /* Ajusta el margen entre el icono y el nombre */
+}
