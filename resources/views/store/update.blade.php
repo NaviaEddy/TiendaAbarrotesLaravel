@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.layout')
 
 @section('content')
 <style>
@@ -14,7 +14,6 @@
         {{ session('success') }}
     </div>
     @endif
-    <a href="{{ route('productos.create') }}" class="btn btn-primary mb-3">Añadir Producto</a>
     <table class="table">
         <thead>
             <tr>
@@ -25,13 +24,13 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($productos as $producto)
+            @foreach ($products as $producto)
             <tr>
                 <td>{{ $producto->id }}</td>
                 <td>{{ $producto->name }}</td>
                 <td>{{ $producto->stock }}</td>
                 <td>
-                    <form action="{{ route('productos.update', $producto->id) }}" method="POST" style="display: flex; align-items: center;">
+                    <form action="{{ route('stock.update', $producto->id) }}" method="POST" style="display: flex; align-items: center;">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="producto_id" value="{{ $producto->id }}">

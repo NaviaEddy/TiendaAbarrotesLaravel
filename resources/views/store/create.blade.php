@@ -1,4 +1,7 @@
 
+@extends('layouts.layout')
+
+@section('content')
 <div class="container">
     <h1>Crear Producto</h1>
     <form action="{{ route('productos.store') }}" method="POST" enctype="multipart/form-data">
@@ -42,3 +45,4 @@
         <button type="submit" class="btn btn-primary">Crear Producto</button>
     </form>
 </div>
+@endsection
