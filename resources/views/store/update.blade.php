@@ -1,12 +1,10 @@
 @extends('layouts.layout')
 
+@section ('styles')
+<link rel="stylesheet" href="{{ asset('css/styles_update.css') }}">
+@endsection
+
 @section('content')
-<style>
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }
-</style>
 <div class="container">
     <h1>Actualización de Stock</h1>
     @if(session('success'))
@@ -30,11 +28,11 @@
                 <td>{{ $producto->name }}</td>
                 <td>{{ $producto->stock }}</td>
                 <td>
-                    <form action="{{ route('stock.update', $producto->id) }}" method="POST" style="display: flex; align-items: center;">
+                    <form action="{{ route('stock.update', $producto->id) }}" method="POST" class="stock-form">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="producto_id" value="{{ $producto->id }}">
-                        <input type="number" name="cantidad" value="0" min="0" id="cantidad-{{ $producto->id }}" class="form-control" style="width: 30px; margin-right: 5px;">
+                        <input type="number" name="cantidad" value="0" min="0" id="cantidad-{{ $producto->id }}" class="form-control cantidad-input">
                         <button type="button" class="btn btn-primary" onclick="increment('{{ $producto->id }}')">+</button>
                         <button type="button" class="btn btn-primary" onclick="decrement('{{ $producto->id }}')">-</button>
                         <button type="submit" class="btn btn-success">Ingresar</button>
@@ -45,7 +43,9 @@
         </tbody>
     </table>
 </div>
+@endsection
 
+@section('scripts')
 <script>
     function increment(id) {
         var input = document.getElementById('cantidad-' + id);
@@ -58,4 +58,3 @@
         input.value = value < 0 ? 0 : value;
     }
 </script>
-@endsection
