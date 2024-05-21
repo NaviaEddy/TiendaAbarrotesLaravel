@@ -8,7 +8,7 @@
 <div class="container">
         <div class="header">
             <h1>LISTA DE PRODUCTOS 2024</h1>
-            <a href="" class="create-button">Crear</a>
+            <!-- <a href="{{ route('Lista_productos.create') }}" class="create-button">Crear</a> -->
         </div>
         <div class="table-container">
             <table>
@@ -17,7 +17,9 @@
                         <th>Nombre</th>
                         <th>Codigo</th>
                         <th>Stock</th>
-                        <th>Acciones</th>
+                        <th>Precio</th>
+                        <th>Categoria</th>
+                        <!-- <th>Acciones</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -26,12 +28,20 @@
                         <td>{{ $producto->name }}</td>
                         <td>{{ $producto->code }}</td>
                         <td>{{ $producto->stock }}</td>
+                        <td>{{ $producto->price }}</td>
                         <td>
-                            <div class="action-buttons">
-                                <a href="" class="edit-button">Editar</a> 
-                                <button type="button" onclick="ConfirmDelete('')" class="delete-button">Eliminar</button>
-                            </div>
+                        @foreach ($categories as $category)
+                            @if($producto->category_id == $category->id)
+                                {{ $category->name }}
+                            @endif
+                        @endforeach
                         </td>
+                        <!-- <td>
+                            <div class="action-buttons">
+                                <a href="{{ route('Lista_productos.edit', $producto->id) }}" class="edit-button">Editar</a> 
+                                <button type="button" onclick="ConfirmDelete('{{ $producto->id }}')" class="delete-button">Eliminar</button>
+                            </div>
+                        </td> -->
                     </tr>
                     @endforeach
                 </tbody>
