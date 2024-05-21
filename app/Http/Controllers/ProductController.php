@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -63,12 +65,17 @@ class ProductController extends Controller
         $producto = Product::findOrFail($id);
         $cantidad = $request->input('cantidad');
 
-        // Aumentar la cantidad de stock actual
         $producto->stock += $cantidad;
         $producto->save();
 
-        return redirect('/actualizacion_stock')->with('success', 'Stock actualizado correctamente.');
-}
+        // Pasar los productos actualizados como un mensaje de sesión
+        $products = Product::all();
+        session()->flash('success', 'Stock actualizado exitosamente');
+
+        return redirect()->route('store.update')->with('products', $products);
+    }
+
+
     /**
      * Remove the specified resource from storage.
      */

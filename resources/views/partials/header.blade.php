@@ -8,19 +8,19 @@
             </div>
             <div>
                 <ul class="navbar-nav">
-                    <li class="nav-item @if($currentUrl === '/home') active @endif" >
+                    <li class="nav-item @if($currentUrl === '/home') active @endif">
                         <a class="nav-link" href="/home">Inicio</a>
                     </li>
                     <li class="nav-item @if($currentUrl === '/Lista_productos') active @endif">
-                        <a class="nav-link" href="home/Lista_productos">Producto</a>
+                        <a class="nav-link" href="/Lista_productos">Productos</a>
                     </li>
                     <li class="nav-item @if($currentUrl === '/stock') active @endif">
-                        <a class="nav-link" href="home/stock">Compras</a>
+                        <a class="nav-link" href="/stock">Compras</a>
                     </li>
                     <li class="nav-item @if($currentUrl === '/ventas') active @endif">
-                        <a class="nav-link" href="home/ventas">Vender</a>
+                        <a class="nav-link" href="/ventas">Vender</a>
                     </li>
-                    
+
                 </ul>
             </div>
         </div>
