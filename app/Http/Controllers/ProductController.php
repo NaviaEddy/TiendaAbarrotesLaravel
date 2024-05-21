@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+
 
 class ProductController extends Controller
 {
@@ -28,10 +29,15 @@ class ProductController extends Controller
      */
     public function create()
     {
+
         $categoria = Category::all();
         return view('store.create')->with([
             'categories' => $categoria,
         ]);
+
+        $categorias = Category::all();
+        return view('actualizacion_stock.create', ['categorias' => $categorias]);
+
     }
 
     /**
@@ -39,6 +45,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required',
             'category_id' => 'required',
@@ -52,6 +59,10 @@ class ProductController extends Controller
 
         Product::create($request->all());
         return redirect()->route('Lista_productos.index');
+
+        Product::create($request->all());
+        return redirect()->route('actualizacion_stock.index');
+
     }
 
     /**
@@ -78,24 +89,20 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+
+    
+
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'category_id' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'stock' => 'required',
-            'code' => 'required',
-            'image' => 'required',
-            'expiration_date' => 'required',
-        ]);
+        $producto = Product::findOrFail($id);
+        $cantidad = $request->input('cantidad');
 
-        $product = Product::findOrfail($id);
-        $product->update($request->all());
-        return redirect()->route('Lista_productos.index');
+        // Aumentar la cantidad de stock actual
+        $producto->stock += $cantidad;
+        $producto->save();
+
+        return redirect('/actualizacion_stock')->with('success', 'Stock actualizado correctamente.');
     }
-
     /**
      * Remove the specified resource from storage.
      */
