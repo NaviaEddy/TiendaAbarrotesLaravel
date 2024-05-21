@@ -12,7 +12,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        
+        $categoria = Category::all();
+        return ['categoria' => $categoria];
     }
 
     /**

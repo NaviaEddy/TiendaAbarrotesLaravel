@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -13,10 +14,12 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::all()->sortBy('created_at');
+        $category = Category::all();
         $currentUrl = '/Lista_productos';
         return view('store.lista_productos')->with([
             'currentUrl' => $currentUrl,
-            'products' => $product
+            'products' => $product,
+            'categories' => $category,
         ]);
     }
 
@@ -25,7 +28,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categoria = Category::all();
+        return view('store.create')->with([
+            'categories' => $categoria,
+        ]);
     }
 
     /**
@@ -33,7 +39,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'category_id' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'stock' => 'required',
+            'code' => 'required',
+            'image' => 'required',
+            'expiration_date' => 'required',
+        ]);
+
+        Product::create($request->all());
+        return redirect()->route('Lista_productos.index');
     }
 
     /**
@@ -47,24 +65,44 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(string $id)
     {
-        //
+        $product = Product::findOrfail($id);
+        $category = Category::all();
+        return view('store.edit')->with([
+            'product' => $product,
+            'categories' => $category,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'category_id' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'stock' => 'required',
+            'code' => 'required',
+            'image' => 'required',
+            'expiration_date' => 'required',
+        ]);
+
+        $product = Product::findOrfail($id);
+        $product->update($request->all());
+        return redirect()->route('Lista_productos.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(string $id)
     {
-        //
+        $product = Product::findOrfail($id);
+        $product->delete();
+        return redirect()->route('Lista_productos.index');
     }
 }
